@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API from '../API';
-import { match, Link } from 'react-router-dom';
+import { match } from 'react-router-dom';
 import styled from 'styled-components';
 
 type Props = {
@@ -9,15 +9,16 @@ type Props = {
   }>;
 };
 
-const Series: React.FC<Props> = ({ match }) => {
+const Book: React.FC<Props> = ({ match }) => {
   const seriesId = match.params.seriesId || '';
-  const [series, setSeries] = useState<Series>(Object);
+  const [book, setBook] = useState<Book>(Object);
   const [fetched, setFetched] = useState<boolean>(false);
 
   const getSeries = async () => {
     try {
-      const res = await API.getSeries(seriesId);
-      setSeries(res);
+      const res = await API.getBooks(seriesId);
+      setBook(res);
+      console.log(res);
       setFetched(true);
     } catch (error) {
       return;
@@ -32,13 +33,12 @@ const Series: React.FC<Props> = ({ match }) => {
     <div>
       {fetched && (
         <>
-          <p>{series.title}</p>
-          {series.books.map((book, index) => {
+          <p>{book.title}</p>
+          {book.imageData.map((book) => {
             return (
-              <React.Fragment key={index}>
+              <React.Fragment key={book.imageId}>
                 <div>
-                  <Link to={`/story/${book.id}`}>読む</Link>
-                  <Img src={book.image} alt={book.title} />
+                  <Img src={book.imageUrl} alt={book.imageId} />
                 </div>
               </React.Fragment>
             );
@@ -55,4 +55,4 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-export default Series;
+export default Book;

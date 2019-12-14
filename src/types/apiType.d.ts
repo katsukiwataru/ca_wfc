@@ -27,3 +27,17 @@ type Books = {
   image: string;
   title: string;
 };
+
+type Book = {
+  title: string;
+  seriesId: string;
+  pageNum: number;
+  imageData: Page[];
+  width: string;
+  height: string;
+};
+
+type Page = {
+  imageId: string;
+  imageUrl: string;
+};
