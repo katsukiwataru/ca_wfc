@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import API from '../API';
 import { match } from 'react-router-dom';
+import LazyLoad from 'react-lazyload';
 import styled from 'styled-components';
 
 type Props = {
@@ -18,7 +19,6 @@ const Book: React.FC<Props> = ({ match }) => {
     try {
       const res = await API.getBooks(seriesId);
       setBook(res);
-      console.log(res);
       setFetched(true);
     } catch (error) {
       return;
@@ -37,9 +37,11 @@ const Book: React.FC<Props> = ({ match }) => {
           {book.imageData.map((book) => {
             return (
               <React.Fragment key={book.imageId}>
-                <div>
-                  <Img src={book.imageUrl} alt={book.imageId} />
-                </div>
+                <LazyLoad height={200}>
+                  <div>
+                    <Img src={book.imageUrl} alt={book.imageId} />
+                  </div>
+                </LazyLoad>
               </React.Fragment>
             );
           })}

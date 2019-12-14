@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import API from '../API';
 import { match, Link } from 'react-router-dom';
+import LazyLoad from 'react-lazyload';
 import styled from 'styled-components';
 
 type Props = {
@@ -38,7 +39,9 @@ const Series: React.FC<Props> = ({ match }) => {
               <React.Fragment key={index}>
                 <div>
                   <Link to={`/story/${book.id}`}>読む</Link>
-                  <Img src={book.image} alt={book.title} />
+                  <LazyLoad>
+                    <Img src={book.image} alt={book.title} />
+                  </LazyLoad>
                 </div>
               </React.Fragment>
             );

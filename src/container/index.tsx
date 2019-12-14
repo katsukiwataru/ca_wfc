@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import API from '../API';
 import { Link } from 'react-router-dom';
+import LazyLoad from 'react-lazyload';
 import styled from 'styled-components';
 
 type Props = {};
@@ -25,11 +26,13 @@ const Home: React.FC<Props> = () => {
       {series.map((serie, index) => {
         return (
           <React.Fragment key={index}>
-            <Link to={`/series/${serie.seriesId}`}>
-              <p>{serie.title}</p>
-              <p>{serie.author}</p>
-              <Img src={serie.seriesImage} alt={serie.title} />
-            </Link>
+            <LazyLoad height={200}>
+              <Link to={`/series/${serie.seriesId}`}>
+                <p>{serie.title}</p>
+                <p>{serie.author}</p>
+                <Img src={serie.seriesImage} alt={serie.title} />
+              </Link>
+            </LazyLoad>
           </React.Fragment>
         );
       })}
