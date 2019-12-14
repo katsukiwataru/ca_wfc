@@ -32,30 +32,42 @@ const Series: React.FC<Props> = ({ match }) => {
   return (
     <div>
       {fetched && (
-        <>
+        <div>
           <p>{series.title}</p>
-          {series.books.map((book, index) => {
-            return (
-              <React.Fragment key={index}>
-                <div>
-                  <Link to={`/story/${book.id}`}>読む</Link>
-                  <LazyLoad>
-                    <Img src={book.image} alt={book.title} />
+          <div>
+            {series.books.map((book, index) => {
+              return (
+                <React.Fragment key={index}>
+                  <LazyLoad height={200}>
+                    <div>
+                      <Img src={book.image} alt={book.title} />
+                      <Link to={`/story/${book.id}`}>読む</Link>
+                    </div>
                   </LazyLoad>
-                </div>
-              </React.Fragment>
-            );
-          })}
-        </>
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </div>
       )}
     </div>
   );
 };
 
 const Img = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   object-fit: cover;
 `;
+
+// const Books = styled.div`
+//   display: flex;
+// `;
+
+// const Book = styled.div`
+//   /* display: flex; */
+//   /* justify-content: center;
+//   align-items: center; */
+// `;
 
 export default Series;

@@ -7,11 +7,11 @@ import styled from 'styled-components';
 type Props = {};
 
 const Home: React.FC<Props> = () => {
-  const [series, setSeries] = useState<Serieses[]>([]);
+  const [serieses, setSerieses] = useState<Serieses[]>([]);
   const getSerieses = async () => {
     try {
       const res = await API.getSerieses();
-      setSeries(res.data);
+      setSerieses(res.data);
     } catch (error) {
       return;
     }
@@ -22,28 +22,68 @@ const Home: React.FC<Props> = () => {
   }, []);
 
   return (
-    <div>
-      {series.map((serie, index) => {
+    <Serieses>
+      {serieses.map((series, index) => {
         return (
-          <React.Fragment key={index}>
-            <LazyLoad height={200}>
-              <Link to={`/series/${serie.seriesId}`}>
-                <p>{serie.title}</p>
-                <p>{serie.author}</p>
-                <Img src={serie.seriesImage} alt={serie.title} />
+          <Series key={index}>
+            <LazyLoad height={300}>
+              <Link to={`/series/${series.seriesId}`}>
+                <Title>{series.title}</Title>
               </Link>
+              {/* <ServiceBox> */}
+              <ImgBox>
+                <Img src={series.seriesImage} alt={series.title} />
+                <Author>{series.author}</Author>
+              </ImgBox>
+              {/* <Text><Description>{series.description}</Description></Text> */}
+              {/* </ServiceBox> */}
             </LazyLoad>
-          </React.Fragment>
+          </Series>
         );
       })}
-    </div>
+    </Serieses>
   );
 };
 
+const Serieses = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  position: absolute;
+  left: 20%;
+`;
+
+const Series = styled.div`
+  margin: 10px;
+`;
+
+const Title = styled.h2`
+  font-size: 18px;
+`;
+
 const Img = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+`;
+
+const ImgBox = styled.div`
+  width: 200px;
+`;
+
+// const ServiceBox = styled.div`
+//   display: flex;
+// `;
+
+// const Text = styled.div`
+//   width: 80%;
+//   margin: 30px;
+// `;
+
+// const Description = styled.p``;
+
+const Author = styled.p`
+  font-size: 20px;
 `;
 
 export default Home;

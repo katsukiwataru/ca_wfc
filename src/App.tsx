@@ -4,11 +4,13 @@ import history from './plugins/history';
 import Home from './container/index';
 import Series from './container/series';
 import Book from './container/book';
+import Header from './components/header';
 
 const App: React.FC = () => {
   return (
     <>
       <div>
+        <Header />
         <Router history={history}>
           <Switch>
             <Route exact path="/" component={Home} />

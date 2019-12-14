@@ -34,17 +34,19 @@ const Book: React.FC<Props> = ({ match }) => {
       {fetched && (
         <>
           <p>{book.title}</p>
-          {book.imageData.map((book) => {
-            return (
-              <React.Fragment key={book.imageId}>
-                <LazyLoad height={200}>
-                  <div>
-                    <Img src={book.imageUrl} alt={book.imageId} />
-                  </div>
-                </LazyLoad>
-              </React.Fragment>
-            );
-          })}
+          <div>
+            {book.imageData.map((book) => {
+              return (
+                <React.Fragment key={book.imageId}>
+                  <LazyLoad height={200}>
+                    <div>
+                      <Img src={book.imageUrl} alt={book.imageId} />
+                    </div>
+                  </LazyLoad>
+                </React.Fragment>
+              );
+            })}
+          </div>
         </>
       )}
     </div>
@@ -52,8 +54,8 @@ const Book: React.FC<Props> = ({ match }) => {
 };
 
 const Img = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 50%;
+  height: 50%;
   object-fit: cover;
 `;
 
