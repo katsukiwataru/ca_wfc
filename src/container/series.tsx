@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import API from '../API';
-import { match, Link } from 'react-router-dom';
-import LazyLoad from 'react-lazyload';
+import { match } from 'react-router-dom';
 import styled from 'styled-components';
+import SeriesComp from '../components/series';
 
 type Props = {
   match: match<{
@@ -33,41 +33,41 @@ const Series: React.FC<Props> = ({ match }) => {
     <div>
       {fetched && (
         <div>
-          <p>{series.title}</p>
-          <div>
+          <BookText>
+            <BookTitle>{series.title}</BookTitle>
+            <Bookdescription>{series.description}</Bookdescription>
+          </BookText>
+          <Serieses>
             {series.books.map((book, index) => {
               return (
                 <React.Fragment key={index}>
-                  <LazyLoad height={200}>
-                    <div>
-                      <Img src={book.image} alt={book.title} />
-                      <Link to={`/story/${book.id}`}>読む</Link>
-                    </div>
-                  </LazyLoad>
+                  <SeriesComp book={book} />
                 </React.Fragment>
               );
             })}
-          </div>
+          </Serieses>
         </div>
       )}
     </div>
   );
 };
 
-const Img = styled.img`
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
+const BookText = styled.div`
+  margin: 10px 30px;
 `;
 
-// const Books = styled.div`
-//   display: flex;
-// `;
+const BookTitle = styled.h2`
+  font-size: 30px;
+`;
 
-// const Book = styled.div`
-//   /* display: flex; */
-//   /* justify-content: center;
-//   align-items: center; */
-// `;
+const Bookdescription = styled.p`
+  font-size: 18px;
+`;
+
+const Serieses = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
 
 export default Series;
