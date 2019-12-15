@@ -29,8 +29,8 @@ const Book: React.FC<Props> = ({ match }) => {
   };
 
   const prevPageNumber = () => {
+    if (pageNumber === 0) return;
     const currentPage = pageNumber - 1;
-    if (!currentPage) return;
     setPageNumber(currentPage);
   };
 
