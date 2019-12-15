@@ -11,15 +11,15 @@ const Home: React.FC<Props> = ({ series }) => {
   return (
     <>
       <Series>
-        <LazyLoad height={300}>
-          <Link to={`/series/${series.seriesId}`}>
-            <Title>{series.title}</Title>
-          </Link>
-          <ImgBox>
+        <Link to={`/series/${series.seriesId}`}>
+          <Title>{series.title}</Title>
+        </Link>
+        <ImgBox>
+          <LazyLoad>
             <Img src={series.seriesImage} alt={series.title} />
-            <Author>作者：{series.author}</Author>
-          </ImgBox>
-        </LazyLoad>
+          </LazyLoad>
+          <Author>作者：{series.author}</Author>
+        </ImgBox>
       </Series>
     </>
   );

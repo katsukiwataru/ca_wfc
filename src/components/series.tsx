@@ -10,14 +10,14 @@ type Props = {
 const Series: React.FC<Props> = ({ book }) => {
   return (
     <Books>
-      <LazyLoad height={200}>
-        <ImgBox>
+      <ImgBox>
+        <LazyLoad>
           <Img src={book.image} alt={book.title} />
-        </ImgBox>
-        <Link to={`/story/${book.id}`}>
-          <ButtonSpan>読む</ButtonSpan>
-        </Link>
-      </LazyLoad>
+        </LazyLoad>
+      </ImgBox>
+      <Link to={`/story/${book.id}`}>
+        <ButtonSpan>読む</ButtonSpan>
+      </Link>
     </Books>
   );
 };
@@ -26,6 +26,9 @@ const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const Books = styled.div`
@@ -34,6 +37,13 @@ const Books = styled.div`
 
 const ImgBox = styled.div`
   width: 200px;
+  position: relative;
+
+  &::before {
+    content: '';
+    padding-top: calc(100% / 200 * 268);
+    display: block;
+  }
 `;
 
 const ButtonSpan = styled.span`
