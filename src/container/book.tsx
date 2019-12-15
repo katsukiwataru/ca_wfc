@@ -15,8 +15,8 @@ const Book: React.FC<Props> = ({ match }) => {
   const [book, setBook] = useState<Book>(Object);
   const [fetched, setFetched] = useState<boolean>(false);
   const [pageNumber, setPageNumber] = useState<number>(0);
-  const ScrollRef = useRef(null);
-  // scrollIntoView(scrollIntoViewOptions);
+  const ScrollRef = useRef<HTMLDivElement>(null);
+  const splitedBookImageData = fetched ? book.imageData.slice(0, pageNumber + 3) : [];
 
   const getSeries = async () => {
     try {
@@ -30,6 +30,7 @@ const Book: React.FC<Props> = ({ match }) => {
 
   const prevPageNumber = () => {
     const currentPage = pageNumber - 1;
+    if (!currentPage) return;
     setPageNumber(currentPage);
   };
 
@@ -40,10 +41,7 @@ const Book: React.FC<Props> = ({ match }) => {
 
   useEffect(() => {
     getSeries();
-    console.log('effect', ScrollRef);
   }, []);
-
-  console.log(ScrollRef);
 
   return (
     <BookContent>
@@ -57,11 +55,11 @@ const Book: React.FC<Props> = ({ match }) => {
               <Pages
                 theme={{
                   windowWidth: window.parent.screen.width,
-                  imageWidth: window.parent.screen.width,
+                  imageWidth: ScrollRef.current ? ScrollRef.current.clientWidth : 0,
                   pageNumber: pageNumber,
                 }}
               >
-                {book.imageData.map((book) => {
+                {splitedBookImageData.map((book) => {
                   return (
                     <React.Fragment key={book.imageId}>
                       <ImgBox ref={ScrollRef}>
@@ -112,11 +110,21 @@ const ImgBox = styled.div`
   width: 30%;
   height: 100%;
   flex-shrink: 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    padding-top: calc(100% / 200 * 268);
+    display: block;
+  }
 `;
 
 const Img = styled.img`
   object-fit: cover;
   width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 export default Book;
