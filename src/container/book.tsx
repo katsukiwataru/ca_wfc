@@ -49,8 +49,6 @@ const Book: React.FC<Props> = ({ match }) => {
         <>
           <BookInner>
             <BookTitle>{book.title}</BookTitle>
-            <button onClick={nextPageNumber}>Next</button>
-            <button onClick={prevPageNumber}>Prev</button>
             <PageContent>
               <Pages
                 theme={{
@@ -72,6 +70,10 @@ const Book: React.FC<Props> = ({ match }) => {
                 })}
               </Pages>
             </PageContent>
+            <Buttons>
+              <Button onClick={nextPageNumber}>Next</Button>
+              <Button onClick={prevPageNumber}>Prev</Button>
+            </Buttons>
           </BookInner>
         </>
       )}
@@ -125,6 +127,17 @@ const Img = styled.img`
   position: absolute;
   top: 0;
   left: 0;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+const Button = styled.button`
+  padding: 10px 40px;
+  background: #f2f2f2;
+  border-radius: 10px;
+  margin: 10px;
 `;
 
 export default Book;
