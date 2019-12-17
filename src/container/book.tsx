@@ -21,6 +21,7 @@ const Book: React.FC<Props> = ({ match }) => {
   const getSeries = async () => {
     try {
       const res = await API.getBooks(seriesId);
+      console.log(res);
       setBook(res);
       setFetched(true);
     } catch (error) {
@@ -36,6 +37,7 @@ const Book: React.FC<Props> = ({ match }) => {
 
   const nextPageNumber = () => {
     const currentPage = pageNumber + 1;
+    if (book.pageNum === currentPage) return;
     setPageNumber(currentPage);
   };
 
