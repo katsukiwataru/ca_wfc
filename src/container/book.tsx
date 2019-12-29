@@ -18,17 +18,6 @@ const Book: React.FC<Props> = ({ match }) => {
   const ScrollRef = useRef<HTMLDivElement>(null);
   const splitedBookImageData = fetched ? book.imageData.slice(0, pageNumber + 3) : [];
 
-  const getSeries = async () => {
-    try {
-      const res = await API.getBooks(seriesId);
-      console.log(res);
-      setBook(res);
-      setFetched(true);
-    } catch (error) {
-      return;
-    }
-  };
-
   const prevPageNumber = () => {
     if (pageNumber === 0) return;
     const currentPage = pageNumber - 1;
@@ -42,6 +31,16 @@ const Book: React.FC<Props> = ({ match }) => {
   };
 
   useEffect(() => {
+    const getSeries = async () => {
+      try {
+        const res = await API.getBooks(seriesId);
+        console.log(res);
+        setBook(res);
+        setFetched(true);
+      } catch (error) {
+        return;
+      }
+    };
     getSeries();
   }, []);
 
