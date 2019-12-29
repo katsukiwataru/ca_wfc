@@ -8,7 +8,6 @@ module.exports = {
   entry: src + '/index.tsx',
   output: {
     path: dist,
-    // filename: 'js/index.js',
     filename: 'js/[name].bundle.js',
     chunkFilename: 'js/[name].bundle.js',
     publicPath: '/',
