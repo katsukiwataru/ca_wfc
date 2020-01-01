@@ -34,7 +34,6 @@ const Book: React.FC<Props> = ({ match }) => {
     const getSeries = async () => {
       try {
         const res = await API.getBooks(seriesId);
-        console.log(res);
         setBook(res);
         setFetched(true);
       } catch (error) {
