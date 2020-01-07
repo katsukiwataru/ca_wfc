@@ -28,7 +28,6 @@
     "@types/styled-components": "^4.4.1",
     "css-loader": "^3.3.2",
     "history": "^4.10.1",
-    "html-webpack-plugin": "^3.2.0",
     "img-loader": "^3.0.1",
     "react-lazyload": "^2.6.5",
     "react-router": "^5.1.2",
@@ -43,6 +42,7 @@
   },
   "devDependencies": {
     "@whatasoda/eslint-config": "^1.3.3",
+    "copy-webpack-plugin": "^5.1.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "typescript": "^3.7.3",
