@@ -8,5 +8,15 @@
   </head>
   <body>
     <div id="root"></div>
+    <script type="module">
+      try {
+          import('/js/main.bundle.js');
+          const rootEl = document.querySelector('#root');
+          rootEl.innerHTML = '<p>...Loading</p>';
+      } catch (err) {
+          rootEl.style = 'color: red;';
+          rootEl.innerHTML = `<p>${err.message}</p>`;
+      }
+  </script>
 </body>
 </html>

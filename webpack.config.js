@@ -1,8 +1,19 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const src = path.resolve(__dirname, 'src');
 const dist = path.resolve(__dirname, 'dist');
+
+const copyRules = [
+  {
+    from: path.resolve(__dirname, 'src/index.html'),
+    to: path.resolve(__dirname, 'dist/index.html'),
+  },
+  {
+    from: path.resolve(__dirname, 'src/assets'),
+    to: dist,
+  },
+];
 
 module.exports = {
   entry: src + '/index.tsx',
@@ -40,9 +51,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-    }),
-  ],
+  plugins: [new CopyWebpackPlugin(copyRules)],
 };
