@@ -52,9 +52,9 @@ module.exports = {
     ],
   },
   plugins: [new CopyWebpackPlugin(copyRules)],
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all',
+  //   },
+  // },
 };
