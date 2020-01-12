@@ -6,28 +6,25 @@ import HomeComp from '../components/index';
 type Props = {};
 
 const Home: React.FC<Props> = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [serieses, setSerieses] = useState<Serieses[]>([]);
-  const getSerieses = async () => {
-    try {
-      const res = await API.getSerieses();
-      setSerieses(res.data);
-    } catch (error) {
-      return;
-    }
-  };
-
   useEffect(() => {
+    const getSerieses = async () => {
+      try {
+        const res = await API.getSerieses();
+        setSerieses(res.data);
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
+    };
     getSerieses();
   }, []);
 
   return (
     <Serieses>
-      {serieses.map((series, index) => {
-        return (
-          <React.Fragment key={index}>
-            <HomeComp series={series} />
-          </React.Fragment>
-        );
+      {errorMessage && <p>{errorMessage}</p>}
+      {serieses.map((series) => {
+        return <HomeComp series={series} key={series.seriesId} />;
       })}
     </Serieses>
   );
