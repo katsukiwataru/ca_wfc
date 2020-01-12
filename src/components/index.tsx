@@ -9,19 +9,17 @@ type Props = {
 
 const Home: React.FC<Props> = ({ series }) => {
   return (
-    <>
-      <Series>
-        <Link to={`/series/${series.seriesId}`}>
-          <Title>{series.title}</Title>
-        </Link>
-        <ImgBox>
-          <LazyLoad>
-            <Img src={series.seriesImage} alt={series.title} />
-          </LazyLoad>
-          <Author>作者：{series.author}</Author>
-        </ImgBox>
-      </Series>
-    </>
+    <Series>
+      <Link to={`/series/${series.seriesId}`}>
+        <Title>{series.title}</Title>
+      </Link>
+      <ImgBox>
+        <LazyLoad>
+          <Img src={series.seriesImage} alt={series.title} />
+        </LazyLoad>
+        <Author>作者：{series.author}</Author>
+      </ImgBox>
+    </Series>
   );
 };
 
