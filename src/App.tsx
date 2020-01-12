@@ -6,16 +6,14 @@ import Route from './router';
 
 const App: React.FC = () => {
   return (
-    <>
-      <div>
-        <Router history={history}>
-          <Header />
-          <Suspense fallback={<div>Loading...</div>}>
-            <Route />
-          </Suspense>
-        </Router>
-      </div>
-    </>
+    <div>
+      <Router history={history}>
+        <Header />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Route />
+        </Suspense>
+      </Router>
+    </div>
   );
 };
 
