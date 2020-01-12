@@ -11,27 +11,26 @@ type Props = {
 };
 
 const Series: React.FC<Props> = ({ match }) => {
-  const seriesId = match.params.seriesId || '';
-  const [series, setSeries] = useState<Series>(Object);
-  const [fetched, setFetched] = useState<boolean>(false);
-
-  const getSeries = async () => {
-    try {
-      const res = await API.getSeries(seriesId);
-      setSeries(res);
-      setFetched(true);
-    } catch (error) {
-      return;
-    }
-  };
+  const seriesId = match.params.seriesId;
+  const [series, setSeries] = useState<Series | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
+    const getSeries = async () => {
+      try {
+        const res = await API.getSeries(seriesId);
+        setSeries(res);
+      } catch (error) {
+        setErrorMessage(error.message);
+      }
+    };
     getSeries();
-  }, []);
+  }, [seriesId]);
 
   return (
     <div>
-      {fetched && (
+      {errorMessage && <p>{errorMessage}</p>}
+      {series && (
         <div>
           <BookText>
             <BookTitle>{series.title}</BookTitle>
