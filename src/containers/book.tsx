@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import API from '../API';
 import { match } from 'react-router-dom';
 import LazyLoad from 'react-lazyload';
@@ -11,41 +11,45 @@ type Props = {
 };
 
 const Book: React.FC<Props> = ({ match }) => {
-  const seriesId = match.params.seriesId || '';
-  const [book, setBook] = useState<Book>(Object);
-  const [fetched, setFetched] = useState<boolean>(false);
-  const [pageNumber, setPageNumber] = useState<number>(0);
+  const seriesId = match.params.seriesId;
+  const [book, setBook] = useState<Book | null>(null);
+  const [pageNumber, setPageNumber] = useState(0);
   const ScrollRef = useRef<HTMLDivElement>(null);
-  const splitedBookImageData = fetched ? book.imageData.slice(0, pageNumber + 3) : [];
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const splitedBookImageData = useMemo(() => {
+    return book ? book.imageData.slice(0, pageNumber + 3) : [];
+  }, [book, pageNumber]);
 
-  const prevPageNumber = () => {
+  const prevPageNumber = useCallback(() => {
     if (pageNumber === 0) return;
-    const currentPage = pageNumber - 1;
-    setPageNumber(currentPage);
-  };
+    setPageNumber((current) => current - 1);
+  }, [pageNumber]);
 
-  const nextPageNumber = () => {
-    const currentPage = pageNumber + 1;
-    if (book.pageNum === currentPage) return;
-    setPageNumber(currentPage);
-  };
+  const nextPageNumber = useCallback(() => {
+    if (book == null) return;
+    setPageNumber((current) => {
+      if (current + 1 === book.pageNum) current;
+      return current + 1;
+    });
+  }, [book]);
 
   useEffect(() => {
     const getSeries = async () => {
       try {
         const res = await API.getBooks(seriesId);
         setBook(res);
-        setFetched(true);
       } catch (error) {
+        setErrorMessage(error.message);
         return;
       }
     };
     getSeries();
-  }, []);
+  }, [seriesId]);
 
   return (
     <BookContent>
-      {fetched && (
+      {errorMessage && <p>{errorMessage}</p>}
+      {book != null && (
         <>
           <BookInner>
             <BookTitle>{book.title}</BookTitle>
@@ -59,13 +63,11 @@ const Book: React.FC<Props> = ({ match }) => {
               >
                 {splitedBookImageData.map((book) => {
                   return (
-                    <React.Fragment key={book.imageId}>
-                      <ImgBox ref={ScrollRef}>
-                        <LazyLoad>
-                          <Img src={book.imageUrl} alt={book.imageId} />
-                        </LazyLoad>
-                      </ImgBox>
-                    </React.Fragment>
+                    <ImgBox ref={ScrollRef} key={book.imageId}>
+                      <LazyLoad>
+                        <Img src={book.imageUrl} alt={book.imageId} />
+                      </LazyLoad>
+                    </ImgBox>
                   );
                 })}
               </Pages>
