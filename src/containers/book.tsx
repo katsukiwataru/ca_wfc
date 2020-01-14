@@ -35,12 +35,12 @@ const Book: React.FC<Props> = ({ match }) => {
 
   useEffect(() => {
     const getSeries = async () => {
-      try {
-        const res = await API.getBooks(seriesId);
+      const { error, res } = await API.getBooks(seriesId);
+      if (res) {
         setBook(res);
-      } catch (error) {
+      }
+      if (error) {
         setErrorMessage(error.message);
-        return;
       }
     };
     getSeries();

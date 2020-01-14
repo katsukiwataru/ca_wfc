@@ -17,10 +17,11 @@ const Series: React.FC<Props> = ({ match }) => {
 
   useEffect(() => {
     const getSeries = async () => {
-      try {
-        const res = await API.getSeries(seriesId);
+      const { error, res } = await API.getSeries(seriesId);
+      if (res) {
         setSeries(res);
-      } catch (error) {
+      }
+      if (error) {
         setErrorMessage(error.message);
       }
     };

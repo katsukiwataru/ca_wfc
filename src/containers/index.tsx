@@ -10,10 +10,11 @@ const Home: React.FC<Props> = () => {
   const [serieses, setSerieses] = useState<Serieses[]>([]);
   useEffect(() => {
     const getSerieses = async () => {
-      try {
-        const res = await API.getSerieses();
+      const { error, res } = await API.getSerieses();
+      if (res) {
         setSerieses(res.data);
-      } catch (error) {
+      }
+      if (error) {
         setErrorMessage(error.message);
       }
     };
