@@ -1,22 +1,25 @@
-export const getSerieses = async () => {
-  const apiServer = 'https://wfc2-image-api-259809.appspot.com/api/series/';
-  const res = await fetch(apiServer);
+const API_URL = 'https://wfc2-image-api-259809.appspot.com/api';
+
+async function _fetch<T>(path: string): Promise<T> {
+  const res = await fetch(API_URL + path);
+  if (!res.ok) {
+    const error = await res.json();
+    throw error;
+  }
   const resJson = await res.json();
-  return resJson;
+  return resJson as T;
+}
+
+export const getSerieses = () => {
+  return _fetch<{ data: Serieses[] }>('/series');
 };
 
 export const getSeries = async (seriesId: string) => {
-  const apiServer = `https://wfc2-image-api-259809.appspot.com/api/series/${seriesId}/`;
-  const res = await fetch(apiServer);
-  const resJson = await res.json();
-  return resJson;
+  return _fetch<Series>(`/series/${seriesId}`);
 };
 
 export const getBooks = async (seriesId: string) => {
-  const apiServer = `https://wfc2-image-api-259809.appspot.com/api/books/${seriesId}/`;
-  const res = await fetch(apiServer);
-  const resJson = await res.json();
-  return resJson;
+  return _fetch<Book>(`/books/${seriesId}/`);
 };
 
 export default { getSeries, getSerieses, getBooks };
