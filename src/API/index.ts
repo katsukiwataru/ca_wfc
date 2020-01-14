@@ -1,13 +1,16 @@
 const API_URL = 'https://wfc2-image-api-259809.appspot.com/api';
 
-async function _fetch<T>(path: string): Promise<T> {
-  const res = await fetch(API_URL + path);
-  if (!res.ok) {
-    const error = await res.json();
-    throw error;
+async function _fetch<T>(path: string): Promise<{ res: T | null; error: Error | null }> {
+  try {
+    const res = await fetch(API_URL + path);
+    const json = await res.json();
+    if (!res.ok) {
+      return { error: json, res: null };
+    }
+    return { error: null, res: json };
+  } catch (error) {
+    return { error, res: null };
   }
-  const resJson = await res.json();
-  return resJson as T;
 }
 
 export const getSerieses = () => {
