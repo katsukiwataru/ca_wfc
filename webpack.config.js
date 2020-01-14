@@ -1,14 +1,11 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const src = path.resolve(__dirname, 'src');
 const dist = path.resolve(__dirname, 'dist');
 
 const copyRules = [
-  {
-    from: path.resolve(__dirname, 'src/index.html'),
-    to: path.resolve(__dirname, 'dist/index.html'),
-  },
   {
     from: path.resolve(__dirname, 'src/assets'),
     to: dist,
@@ -51,10 +48,15 @@ module.exports = {
       },
     ],
   },
-  plugins: [new CopyWebpackPlugin(copyRules)],
-  // optimization: {
-  //   splitChunks: {
-  //     chunks: 'all',
-  //   },
-  // },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+    new CopyWebpackPlugin(copyRules),
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 };
