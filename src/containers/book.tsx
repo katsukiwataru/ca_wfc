@@ -49,7 +49,7 @@ const Book: React.FC<Props> = ({ match }) => {
   return (
     <BookContent>
       {errorMessage && <p>{errorMessage}</p>}
-      {book != null && (
+      {book && (
         <>
           <BookInner>
             <BookTitle>{book.title}</BookTitle>
