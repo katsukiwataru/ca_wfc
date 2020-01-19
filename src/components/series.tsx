@@ -55,6 +55,7 @@ const ButtonSpan = styled.span`
   border-radius: 25px;
   color: white;
   font-weight: bold;
+  width: 190px;
 `;
 
 export default Series;

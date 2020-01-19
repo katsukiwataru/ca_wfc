@@ -10,15 +10,16 @@ type Props = {
 const Home: React.FC<Props> = ({ series }) => {
   return (
     <Series>
-      <Link to={`/series/${series.seriesId}`}>
-        <Title>{series.title}</Title>
-      </Link>
+      <Title>{series.title}</Title>
       <ImgBox>
         <LazyLoad>
           <Img src={series.seriesImage} alt={series.title} />
         </LazyLoad>
         <Author>作者：{series.author}</Author>
       </ImgBox>
+      <Link to={`/series/${series.seriesId}`}>
+        <ButtonSpan>読む</ButtonSpan>
+      </Link>
     </Series>
   );
 };
@@ -38,8 +39,21 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
+const ButtonSpan = styled.span`
+  display: block;
+  text-align: center;
+  padding: 10px;
+  margin: 10px auto;
+  background: black;
+  border-radius: 25px;
+  color: white;
+  font-weight: bold;
+  width: 190px;
+`;
+
 const ImgBox = styled.div`
   width: 200px;
+  margin: 0 auto;
 `;
 
 const Author = styled.p`

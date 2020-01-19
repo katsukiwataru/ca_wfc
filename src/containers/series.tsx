@@ -38,9 +38,9 @@ const Series: React.FC<Props> = ({ match }) => {
             <Bookdescription>{series.description}</Bookdescription>
           </BookText>
           <Serieses>
-            {series.books.map((book, index) => {
+            {series.books.map((book) => {
               return (
-                <React.Fragment key={index}>
+                <React.Fragment key={book.id}>
                   <SeriesComp book={book} />
                 </React.Fragment>
               );
