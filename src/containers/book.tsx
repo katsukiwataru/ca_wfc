@@ -28,8 +28,10 @@ const Book: React.FC<Props> = ({ match }) => {
   const nextPageNumber = useCallback(() => {
     if (book == null) return;
     setPageNumber((current) => {
-      if (current + 1 === book.pageNum) current;
-      return current + 1;
+      if (current + 1 <= book.pageNum) {
+        return current + 1;
+      }
+      return current;
     });
   }, [book]);
 
